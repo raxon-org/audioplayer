@@ -2,7 +2,7 @@
 import { version } from "/Module/Priya.js";
 import { root } from "/Module/Web.js";
 import { dialog } from "/Dialog/Module/Dialog.js";
-import { player } from "/Application/AudioPlayer/Module/Player.js"
+import { player } from "/Application/Audioplayer/Module/Player.js"
 import { taskbar } from "/Application/Desktop/Module/Taskbar.js";
 require(
     [
