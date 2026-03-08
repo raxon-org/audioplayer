@@ -3,7 +3,7 @@
         "Route": [
             {
                 "name": "application-audio-player",
-                "path": "\/Application\/AudioPlayer\/",
+                "path": "\/Application\/Audioplayer\/",
                 "host": "{{options('frontend.host')}}",
                 "controller": "Domain:{{app.controller.host(options('frontend.host'))}}:Application:AudioPlayer:Controller:Player:main",
                 "priority": 3001,
@@ -14,7 +14,7 @@
             },
             {
                 "name": "application-audio-player-icon",
-                "url": "\/Application\/AudioPlayer\/Icon\/Icon.png",
+                "url": "\/Application\/Audioplayer\/Icon\/Icon.png",
                 "host": "{{options('frontend.host')}}",
                 "priority": 3002
             }

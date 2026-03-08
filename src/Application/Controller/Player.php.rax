@@ -1,6 +1,6 @@
 {{$options = options()}}
 <?php
-namespace Domain\{{php.namespace.host($options.frontend.host)}}\Application\AudioPlayer\Controller;
+namespace Domain\{{php.namespace.host($options.frontend.host)}}\Application\Audioplayer\Controller;
 
 use Raxon\App;
 
