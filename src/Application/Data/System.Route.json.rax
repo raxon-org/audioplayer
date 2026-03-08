@@ -5,7 +5,7 @@
                 "name": "application-audio-player",
                 "path": "\/Application\/Audioplayer\/",
                 "host": "{{options('frontend.host')}}",
-                "controller": "Domain:{{app.controller.host(options('frontend.host'))}}:Application:AudioPlayer:Controller:Player:main",
+                "controller": "Domain:{{app.controller.host(options('frontend.host'))}}:Application:Audioplayer:Controller:Player:main",
                 "priority": 3001,
                 "method": [
                     "GET",
