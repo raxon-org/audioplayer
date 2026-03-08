@@ -1,0 +1,152 @@
+section[name="application-audio-player"] {
+    width: 100%;
+    height: 100%;
+}
+
+section[name="application-audio-player"] .dialog {
+    width: 400px;
+    height: 168px;
+    top: calc(50% - 100px);
+    left: calc(50% - 200px);
+}
+
+section[name="application-audio-player"] .head {
+    height: 40px;
+    width: 100%;
+}
+
+section[name="application-audio-player"] .head .icon {
+    height: 24px;
+}
+
+section[name="application-audio-player"] .head h1 {
+    padding-left: 10px;
+    padding-top: 5px;
+    display: inline-block;
+    margin: 0;
+}
+
+section[name="application-audio-player"] .head .close {
+    float: right;
+    padding: 2px;
+    padding-right: 10px;
+}
+
+section[name="application-audio-player"] .head .close i {
+    color: rgba(0, 0, 0, 1);
+    font-size: 36px;
+}
+
+section[name="application-audio-player"] .head .close i:hover {
+    color: rgba(255, 0, 0, 1);
+}
+
+section[name="application-audio-player"] .menu {
+    background: rgba(225, 225, 225, 1);
+    height: 20px;
+    width: 100%;
+    overflow: hidden;
+    cursor: default;
+}
+
+section[name="application-audio-player"] .menu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+section[name="application-audio-player"] .menu li {
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid rgba(200, 200, 200, 1);
+}
+
+section[name="application-audio-player"] .menu li.active {
+    background: rgba(255, 124, 13, 1);
+}
+
+section[name="application-audio-player"] .menu li .close:hover {
+    color: rgba(255, 0, 0, 1);
+}
+
+
+section[name="application-audio-player"] .menu li .has-changed {
+    margin-left: 10px;
+}
+
+section[name="application-audio-player"] .menu-file-protector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+section[name="application-audio-player"] .menu-file {
+    position: absolute;
+    top: 60px;
+    width: 100px;
+    background: rgba(225, 225, 225, 1);
+    border: 1px solid rgba(200, 200, 200, 1);
+    cursor: default;
+    z-index: 1;
+}
+
+section[name="application-audio-player"] .menu-file li {
+    clear: both;
+    border: 0;
+    width: calc(100% - 20px);
+}
+
+section[name="application-audio-player"] .menu-file li:hover {
+    background: rgba(200, 226, 230, 1);
+}
+
+section[name="application-audio-player"] .menu-application-audio-player {
+    background: rgba(225, 225, 225, 1);
+    border-top: 1px solid rgba(200, 200, 200, 1);
+    height: 19px;
+    width: 100%;
+    overflow: hidden;
+    cursor: default;
+}
+
+section[name="application-audio-player"] .menu-application-audio-player ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+section[name="application-audio-player"] .menu-application-audio-player li {
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid rgba(200, 200, 200, 1);
+}
+
+section[name="application-audio-player"] .menu-application-audio-player li.active {
+    background: rgba(255, 124, 13, 1);
+}
+
+section[name="application-audio-player"] .menu-application-audio-player li .close:hover {
+    color: rgba(255, 0, 0, 1);
+}
+
+section[name="application-audio-player"] .menu-application-audio-player li .has-changed {
+    margin-left: 10px;
+}
+
+section[name="application-audio-player"] .body {
+    background: rgba(255, 255, 255, 1);
+    height: calc(100% - 110px);
+    width: 100%;
+    overflow: auto;
+    text-align: center;
+}
+
+section[name="application-audio-player"] .footer {
+    width: 100%;
+    height: 30px;
+    background: rgba(225, 225, 225, 1);
+}

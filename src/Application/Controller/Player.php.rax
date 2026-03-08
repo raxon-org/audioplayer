@@ -1,0 +1,34 @@
+{{$options = options()}}
+<?php
+namespace Domain\{{php.namespace.host($options.frontend.host)}}\Application\AudioPlayer\Controller;
+
+use Raxon\App;
+
+use Raxon\Module\Controller;
+
+use Exception;
+
+use Raxon\Exception\ObjectException;
+use Raxon\Exception\FileWriteException;
+use Raxon\Exception\LocateException;
+use Raxon\Exception\UrlEmptyException;
+use Raxon\Exception\UrlNotExistException;
+
+class Player extends Controller {
+    const DIR = __DIR__ . DIRECTORY_SEPARATOR;
+
+    /**
+     * @throws LocateException
+     * @throws ObjectException
+     * @throws UrlEmptyException
+     * @throws UrlNotExistException
+     * @throws FileWriteException
+     * @throws Exception
+     */
+    public static function main(App $object){
+        $name = Player::name(__FUNCTION__ , __CLASS__, '/');
+        $url = Player::locate($object, $name);
+        $player = Player::response($object, $url);
+        return $player;
+    }
+}
