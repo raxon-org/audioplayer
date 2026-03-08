@@ -1,4 +1,3 @@
-{{RAX}}
 {{translation.import()}}
 {{$meta.author = __('meta.author')}}
 {{$meta.title = __('meta.title')}}

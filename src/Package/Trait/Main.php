@@ -1,5 +1,5 @@
 <?php
-namespace Package\Raxon\AudioPlayer\Trait;
+namespace Package\Raxon\Audioplayer\Trait;
 
 use Raxon\App;
 use Raxon\Config;
@@ -18,7 +18,7 @@ use Raxon\Node\Module\Node;
 use Exception;
 
 trait Main {
-    const NAME = 'AudioPlayer';
+    const NAME = 'Audioplayer';
     /**
      * @throws DirectoryCreateException
      * @throws Exception

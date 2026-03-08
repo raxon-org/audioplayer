@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\Raxon\AudioPlayer\Controller;
+namespace Package\Raxon\Audioplayer\Controller;
 
 use Raxon\App;
 

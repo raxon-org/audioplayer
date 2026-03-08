@@ -1,5 +1,5 @@
 <?php
-namespace Package\Raxon\AudioPlayer\Trait;
+namespace Package\Raxon\Audioplayer\Trait;
 
 use Raxon\Exception\DirectoryCreateException;
 use Raxon\Exception\FileWriteException;
