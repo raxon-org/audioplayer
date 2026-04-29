@@ -101,11 +101,8 @@ player.player = (id) => {
         return;
     }
     let key = user.get('key');
-    const array = section.select('input[name="node.source"]')?.value.split('?');
-    console.log(array);
-    console.log(section.select('input[name="node.source"]')?.value);
-    // let src = _('_').urlencode(section.select('input[name="node.source"]')?.value);
-    let src = _('_').str_replace('&', '%26', section.select('input[name="node.source"]')?.value);
+    //node.source is urlencoded in the template View/Section/Dialog.tpl.rax
+    let src = section.select('input[name="node.source"]')?.value;
     let type = section.select('input[name="node.type"]')?.value;
     if(key){
         src += '&key=' + key;
