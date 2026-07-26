@@ -4,6 +4,7 @@ namespace Package\Raxon\Audioplayer\Trait;
 use Raxon\App;
 use Raxon\Config;
 
+use Raxon\Doctrine\Module\Database;
 use Raxon\Exception\DirectoryCreateException;
 
 use Raxon\Module\Cli;
@@ -19,6 +20,8 @@ use Exception;
 
 trait Main {
     const NAME = 'Audioplayer';
+    const ROUTE_NAME = 'application-audio-player';
+    const ICON_URL = '/Application/Audioplayer/Icon/Icon.png';
     /**
      * @throws DirectoryCreateException
      * @throws Exception
@@ -189,7 +192,66 @@ trait Main {
                 }                
             }
         }
-        //add application and extensions like videoplayer
+
+        if(!property_exists($options, 'connection')){
+            $options->connection = 'system';
+        }
+        if(!property_exists($options, 'environment')){
+            $options->environment = $object->config('framework.environment');;
+        }
+        if(empty($options->environment)){
+            $options->environment = '*';
+        }
+        $config = Database::config($object);
+        $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+        if($connection === null){
+            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
+        }
+        if($connection === null){
+            throw new Exception('Connection not found aborting...');
+        }
+        $connection->manager = Database::entity_manager($object, $config, $connection);
+        $repository = $connection->manager->getRepository('\\Entity\\Extension');
+        $extensions = [
+            'mp3',
+            'wav',
+            'ogg',
+            'gzwav'
+        ];
+        $list =$repository->findBy([
+            'name' => $extensions
+        ]);
+        $list_application = [];
+        foreach($list as $nr => $extension){
+            $applications = $extension->getApplications();
+            foreach($applications as $application_nr => $application){
+                if(!in_array($application->getName(), $list_application, true)){
+                    $list_application[] = $application->getName();
+                }
+            }
+            if(!in_array(self::NAME, $list_application, true)){
+                //adding application to the extension and add extensions to the application
+                $repository = $connection->manager->getRepository('\Entity\Application');
+            $application_url = '{{route.get(\''. self::ROUTE_NAME . '\')}}';
+                $entity_application = $repository->findOneBy([
+                    'url' => $application_url
+                ]);
+                if(!$entity_application){
+                    $entity_application = new \Entity\Application();
+                    $entity_application->setUrl('{{route.get(\''. self::ROUTE_NAME . '\')}}');
+                    $entity_application->setName(self::NAME);
+                    $entity_application->iconUrl(self::ICON_URL);
+                    $entity_application->setExtensions($list);
+                    $connection->manager->persist($entity_application);
+                } else {
+                    $entity_application->setExtensions($list);
+                    $connection->manager->persist($entity_application);
+                }
+                $extension->addApplication($entity_application);
+                $connection->manager->persist($extension);
+                $connection->manager->flush();
+            }
+        }
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
         if($output){
