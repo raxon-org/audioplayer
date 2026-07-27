@@ -216,8 +216,10 @@ trait Main {
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
         $class = 'System.Server.Extension.Enabled';
-        $node = new Node($object);
-        $extension_list = $node->list($class, $node->role_system(), []);
+        $extension_list = $object->data_read($object->config('controller.dir.data') .
+            'System.Server.Extension.Enabled' .
+            $object->config('extension.json')
+        );
         dd($extension_list);
         $extensions = [
             'mp3',
