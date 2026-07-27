@@ -22,6 +22,7 @@ trait Main {
     const NAME = 'Audioplayer';
     const ROUTE_NAME = 'application-audio-player';
     const ICON_URL = '/Application/Audioplayer/Icon/Icon.png';
+    const EXTENSION_ENABLED = 'System.Server.Extension.Enabled';
     /**
      * @throws DirectoryCreateException
      * @throws Exception
@@ -216,12 +217,12 @@ trait Main {
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
         $url = $object->config('controller.dir.data') .
-            'System.Server.Extension.Enabled' .
+            self::EXTENSION_ENABLED .
             $object->config('extension.json');
         $data_extension = $object->data_read($url);
         $extensions = [];
         if($data_extension){
-            foreach($data_extension->data('System.Server.Extension.Enabled') as $extension){
+            foreach($data_extension->data(self::EXTENSION_ENABLED) as $extension){
                 if(
                     is_object($extension) &&
                     property_exists($extension, 'extension')){
@@ -231,16 +232,6 @@ trait Main {
                 }
             }
         }
-        /*
-        dd($extension_list);
-        $extensions = [
-            'mp3',
-            'wav',
-            'ogg',
-            'gzwav'
-        ];
-        */
-        ddd($extensions);
         $list =$repository->findBy([
             'name' => $extensions
         ]);
