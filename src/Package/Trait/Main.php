@@ -218,8 +218,20 @@ trait Main {
         $url = $object->config('controller.dir.data') .
             'System.Server.Extension.Enabled' .
             $object->config('extension.json');
-        breakpoint($url);
-        $extension_list = $object->data_read($url);
+        $data_extension = $object->data_read($url);
+        $extensions = [];
+        if($data_extension){
+            foreach($data_extension->data('System.Server.Extension.Enabled') as $extension){
+                if(
+                    is_object($extension) &&
+                    property_exists($extension, 'extension')){
+                    if(!in_array($extension->extension, $extensions, true)){
+                        $extensions[] = $extension->extension;
+                    }
+                }
+            }
+        }
+        /*
         dd($extension_list);
         $extensions = [
             'mp3',
@@ -227,6 +239,8 @@ trait Main {
             'ogg',
             'gzwav'
         ];
+        */
+        ddd($extensions);
         $list =$repository->findBy([
             'name' => $extensions
         ]);
