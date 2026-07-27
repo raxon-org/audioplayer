@@ -33,6 +33,8 @@ trait Main {
             return;
         }
         $has_frontend = false;
+        $frontend_options = [];
+        $backend_options = [];
         if(property_exists($options, 'frontend')){
             if(property_exists($options->frontend, 'host')){                
                 $has_frontend = true;
@@ -68,6 +70,7 @@ trait Main {
         if($has_backend === false){
             throw new Exception('Backend.host option is required and must be defined in Node/System.Host.json aborting...');
         }
+
         $class = 'System.Host';
         $node = new Node($object);
         $response_frontend = $node->record($class, $node->role_system(), $frontend_options);
@@ -212,6 +215,10 @@ trait Main {
         }
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
+        $class = 'System.Extension';
+        $node = new Node($object);
+        $extension_list = $node->list($class, $node->role_system(), []);
+        dd($extension_list);
         $extensions = [
             'mp3',
             'wav',
