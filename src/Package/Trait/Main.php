@@ -215,11 +215,11 @@ trait Main {
         }
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
-        $class = 'System.Server.Extension.Enabled';
-        $extension_list = $object->data_read($object->config('controller.dir.data') .
+        $url = $object->config('controller.dir.data') .
             'System.Server.Extension.Enabled' .
-            $object->config('extension.json')
-        );
+            $object->config('extension.json');
+        breakpoint($url);
+        $extension_list = $object->data_read($url);
         dd($extension_list);
         $extensions = [
             'mp3',
