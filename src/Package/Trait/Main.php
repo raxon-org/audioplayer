@@ -214,6 +214,7 @@ trait Main {
         if($connection === null){
             throw new Exception('Connection not found aborting...');
         }
+        dd($connection);
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
         $url = $object->config('controller.dir.data') .
