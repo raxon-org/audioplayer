@@ -215,7 +215,7 @@ trait Main {
         }
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
-        $class = 'System.Extension';
+        $class = 'System.Server.Extension.Enabled';
         $node = new Node($object);
         $extension_list = $node->list($class, $node->role_system(), []);
         dd($extension_list);

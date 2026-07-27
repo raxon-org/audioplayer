@@ -1,0 +1,26 @@
+{
+  "System": {
+    "Server": {
+      "Extension": {
+        "Enabled": [
+            {
+              "description": "Wav file",
+              "extension": "wav"
+            },
+            {
+              "description": "Mp3 file",
+              "extension": "mp3"
+            },
+            {
+              "description": "Ogg Vorbis file",
+              "extension": "ogg"
+            },
+            {
+              "description": "Gzip Wav file",
+              "extension": "gzwav"
+            }
+        ]
+      }
+    }
+  }
+}
