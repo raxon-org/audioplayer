@@ -29,7 +29,7 @@ trait Main {
      * @throws DirectoryCreateException
      * @throws Exception
      */
-    public function install($flags, $options): void
+    public function install(object $flags, object $options): void
     {
         $object = $this->object();
         if($object->config(Config::POSIX_ID) !== 0){
@@ -209,25 +209,7 @@ trait Main {
             $options->environment = '*';
         }
         $config = Database::config($object);
-        $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
-        if($connection === null){
-            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
-        }
-        if($connection === null){
-            throw new Exception('Connection not found aborting...');
-        }
-        $destination = new Destination();
-        $destination->set('controller',  $object->config('controller.class'));
-        $destination->set('function', $object->config('controller.function'));
-        $controller = $destination->get('controller');
-        $methods = get_class_methods($controller);
-        $function = $destination->get('function');
-        OutputFilter::on($object, $connection);
-        $connection = OutputFilter::trigger($object, $destination, [
-            'methods' => $methods,
-            'function' => $function,
-            'response' => $connection
-        ]);
+        $connection = $this->connection($connection);
         dd($connection);
         //need output filter or decorator on tje json object
         $temp_connection = clone $connection;
@@ -297,6 +279,31 @@ trait Main {
         if($notification){
             echo $notification;
         }
+    }
+
+    public function connection(object $flags, object $options = null): object
+    {
+        $object = $this->object();
+        $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+        if($connection === null){
+            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
+        }
+        if($connection === null){
+            throw new Exception('Connection not found aborting...');
+        }$connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+        if($connection === null){
+            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
+        }
+        if($connection === null){
+            throw new Exception('Connection not found aborting...');
+        }
+        foreach($connection as $key => $value){
+            if(substr($key, 0, 1) === '#'){
+                unset($connection->{$key});
+            }
+            $connection->{$key} = $value;
+        }
+        return $connection;
     }
 
 }
