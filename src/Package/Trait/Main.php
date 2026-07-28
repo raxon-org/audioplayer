@@ -216,7 +216,7 @@ trait Main {
         if($connection === null){
             throw new Exception('Connection not found aborting...');
         }
-        breakpoint($object->config('route.current');
+        breakpoint($object->config('route.current'));
         /*
         $route = Route::controller($route);
         $destination->set('controller',  $route->controller);
