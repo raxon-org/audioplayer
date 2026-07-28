@@ -292,7 +292,6 @@ trait Main {
             if(substr($key, 0, 1) === '#'){
                 unset($connection->{$key});
             }
-            $connection->{$key} = $value;
         }
         return $connection;
     }
