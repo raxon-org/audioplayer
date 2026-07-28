@@ -214,6 +214,8 @@ trait Main {
         if($connection === null){
             throw new Exception('Connection not found aborting...');
         }
+        ddd($connection);
+        //need output filter or decorator on tje json object
         $temp_connection = clone $connection;
         unset($temp_connection->{'#class'});
         unset($temp_connection->uuid);
