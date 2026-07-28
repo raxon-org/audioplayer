@@ -222,6 +222,7 @@ trait Main {
         $controller = $destination->get('controller');
         $methods = get_class_methods($controller);
         $function = $destination->get('function');
+        OutputFilter::on($object, $connection);
         $connection = OutputFilter::trigger($object, $destination, [
             'methods' => $methods,
             'function' => $function,
