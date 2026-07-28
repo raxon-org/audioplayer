@@ -210,7 +210,7 @@ trait Main {
         }
         $config = Database::config($object);
         $connection = $this->connection($flags, $options);
-        ddd($connection);
+        breakpint($connection);
         //need output filter or decorator on tje json object
         $temp_connection = clone $connection;
         unset($temp_connection->{'#class'});
