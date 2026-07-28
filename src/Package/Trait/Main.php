@@ -122,7 +122,6 @@ trait Main {
             }
         }
         $patch = $options->patch ?? null;
-        ddd($read);
         foreach($read as $nr => $file){
             if($file->type === File::TYPE){
                 $file->extension = File::extension($file->target);
@@ -211,16 +210,7 @@ trait Main {
         }
         $config = Database::config($object);
         $connection = $this->connection($flags, $options);
-        breakpint($connection);
-        //need output filter or decorator on tje json object
-        $temp_connection = clone $connection;
-        unset($temp_connection->{'#class'});
-        unset($temp_connection->uuid);
-        unset($temp_connection->{'#index'});
-
-        d($connection);
-
-        $connection->manager = Database::entity_manager($object, $config, $temp_connection);
+        $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
         $url = $object->config('controller.dir.data') .
             self::EXTENSION_ENABLED .
