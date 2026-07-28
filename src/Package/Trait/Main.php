@@ -216,25 +216,18 @@ trait Main {
         if($connection === null){
             throw new Exception('Connection not found aborting...');
         }
-        breakpoint($object->config('controller'));
-        /*
-        $route = Route::controller($route);
-        $destination->set('controller',  $route->controller);
-        $destination->set('function', $route->function);
-        App::controller($object, $destination);
+        $destination = new Destination();
+        $destination->set('controller',  $object->config('controller.class'));
+        $destination->set('function', $object->config('controller.function'));
         $controller = $destination->get('controller');
         $methods = get_class_methods($controller);
         $function = $destination->get('function');
-        $output = OutputFilter::trigger($object, $destination, [
+        $connection = OutputFilter::trigger($object, $destination, [
             'methods' => $methods,
             'function' => $function,
-            'response' => $output
+            'response' => $connection
         ]);
-        */
-        $connection = OutputFilter::on($object, $connection);
-        $destination = new Destination();
-        OutputFilter::trigger($object, $destination, []);
-        ddd($connection);
+        dd($connection);
         //need output filter or decorator on tje json object
         $temp_connection = clone $connection;
         unset($temp_connection->{'#class'});
