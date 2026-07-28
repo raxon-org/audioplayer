@@ -209,7 +209,7 @@ trait Main {
             $options->environment = '*';
         }
         $config = Database::config($object);
-        $connection = $this->connection($connection);
+        $connection = $this->connection($flags, $options);
         dd($connection);
         //need output filter or decorator on tje json object
         $temp_connection = clone $connection;
