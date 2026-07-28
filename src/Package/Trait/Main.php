@@ -9,9 +9,11 @@ use Raxon\Exception\DirectoryCreateException;
 
 use Raxon\Module\Cli;
 use Raxon\Module\Data;
+use Raxon\Module\Destination;
 use Raxon\Module\Dir;
 use Raxon\Module\Core;
 use Raxon\Module\File;
+use Raxon\Module\OutputFilter;
 use Raxon\Parse\Module\Parse;
 
 use Raxon\Node\Module\Node;
@@ -214,6 +216,24 @@ trait Main {
         if($connection === null){
             throw new Exception('Connection not found aborting...');
         }
+        ddd($object->config());
+        /*
+        $route = Route::controller($route);
+        $destination->set('controller',  $route->controller);
+        $destination->set('function', $route->function);
+        App::controller($object, $destination);
+        $controller = $destination->get('controller');
+        $methods = get_class_methods($controller);
+        $function = $destination->get('function');
+        $output = OutputFilter::trigger($object, $destination, [
+            'methods' => $methods,
+            'function' => $function,
+            'response' => $output
+        ]);
+        */
+        $connection = OutputFilter::on($object, $connection);
+        $destination = new Destination();
+        OutputFilter::trigger($object, $destination, []);
         ddd($connection);
         //need output filter or decorator on tje json object
         $temp_connection = clone $connection;
