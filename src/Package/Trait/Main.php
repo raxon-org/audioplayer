@@ -281,7 +281,7 @@ trait Main {
         }
     }
 
-    public function connection(object $flags, object $options = null): object
+    public function connection(object $flags, null|object $options = null): object
     {
         $object = $this->object();
         $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
