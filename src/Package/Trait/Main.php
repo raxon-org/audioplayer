@@ -209,7 +209,7 @@ trait Main {
             $options->environment = '*';
         }
         $config = Database::config($object);
-        $connection = $this->connection($flags, $options);
+        $connection = Database::connection($object, $flags, $options);
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $repository = $connection->manager->getRepository('\\Entity\\Extension');
         $url = $object->config('controller.dir.data') .
