@@ -122,6 +122,7 @@ trait Main {
             }
         }
         $patch = $options->patch ?? null;
+        ddd($read);
         foreach($read as $nr => $file){
             if($file->type === File::TYPE){
                 $file->extension = File::extension($file->target);
