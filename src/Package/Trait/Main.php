@@ -243,7 +243,7 @@ trait Main {
             $page_count = ceil($count / $limit);
         }
         if(!property_exists($options, 'sort')){
-            $options->sort = 'uuid';       
+            $options->sort = 'uuid';
         }
         if(!is_array($options->sort)){
             $options->sort = [
@@ -266,6 +266,7 @@ trait Main {
                 'page' => $page
             ]);
             d($response);
+            /*
             if (
                 $response !== null &&
                 is_array($response) &&
@@ -291,6 +292,7 @@ trait Main {
                     $response = $node->create($class, $role, $record);
                 }
             }
+            */
         }
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
