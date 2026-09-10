@@ -270,24 +270,24 @@ trait Main {
                 is_array($response) &&
                 array_key_exists('list', $response)
             ) {
+                $user_list = [];
                 foreach ($response['list'] as $nr => $user) {
-                    $class = 'System.Application';
-                    $role = $node->role_system();
-                    $record = [
-                        "name" => self::NAME,
-                        "user" => [
-                            $user['uuid']
-                        ],
-                        "display" => (object) [
-                            'name' => self::DISPLAY_NAME,
-                        ],
-                        "url" => '',
-                        "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
-                        'description' => 'Audio Player (Playing mp3, wav & ogg)',
-                        'extension' => $extensions,
-                    ];
-                    $response = $node->create($class, $role, $record);
+                    $user_list[] = $user->uuid ?? null;
                 }
+                $class = 'System.Application';
+                $role = $node->role_system();
+                $record = [
+                    "name" => self::NAME,
+                    "user" => $user_list,
+                    "display" => (object) [
+                        'name' => self::DISPLAY_NAME,
+                    ],
+                    "url" => '',
+                    "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
+                    'description' => 'Audio Player (Playing mp3, wav & ogg)',
+                    'extension' => $extensions,
+                ];
+                $response = $node->create($class, $role, $record);
             }
         }
         $command = 'app install raxon/account -patch';
