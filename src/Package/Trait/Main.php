@@ -236,7 +236,7 @@ trait Main {
         $class = 'Account.User';
         $node = new Node($object);
         $role_system = $node->role_system();
-        $limit = 1;
+        $limit = 100;
         $count = $node->count($class, $role_system);
         $page_count = 1;
         if($limit > 0){
@@ -265,15 +265,12 @@ trait Main {
                 'limit' => $limit,
                 'page' => $page
             ]);
-            d($response);
-            /*
             if (
                 $response !== null &&
                 is_array($response) &&
                 array_key_exists('list', $response)
             ) {
                 foreach ($response['list'] as $nr => $user) {
-                    ddd($user);
                     $class = 'System.Application';
                     $role = $node->role_system();
                     $record = [
@@ -292,7 +289,6 @@ trait Main {
                     $response = $node->create($class, $role, $record);
                 }
             }
-            */
         }
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
