@@ -242,6 +242,9 @@ trait Main {
         if($limit > 0){
             $page_count = ceil($count / $limit);
         }
+        if(!property_exists($options, 'sort')){
+            $options->sort = 'uuid';       
+        }
         if(!is_array($options->sort)){
             $options->sort = [
                 $options->sort => 'ASC'
