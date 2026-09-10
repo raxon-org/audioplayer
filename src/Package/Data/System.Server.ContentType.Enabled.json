@@ -1,26 +1,26 @@
 {
   "System": {
     "Server": {
-      "Extension": {
+      "ContentType": {
         "Enabled": [
             {
-              "description": "Wav file",
-              "name": "wav",
+              "description": "Content-Type for Wav file",
+              "type": "audio\/wav",
               "extension": ".wav"
             },
             {
-              "description": "Mp3 file",
-              "name": "mp3",
+              "description": "Content-Type for Mp3 file",
+              "type": "audio/mp3",
               "extension": ".mp3"
             },
             {
-              "description": "Ogg Vorbis file",
-              "name": "ogg",
+              "description": "Content-Type for Ogg Vorbis file",
+              "name": "audio/ogg",
               "extension": ".ogg"
             },
             {
               "description": "Gzip Wav file",
-              "name": "gzwav",
+              "name": "audio/gzwav",
               "extension": ".gzwav"
             }
         ]

@@ -22,9 +22,11 @@ use Exception;
 
 trait Main {
     const NAME = 'Audioplayer';
+    const DISPLAY_NAME = 'Audio Player';
     const ROUTE_NAME = 'application-audio-player';
     const ICON_URL = '/Application/Audioplayer/Icon/Icon.png';
     const EXTENSION_ENABLED = 'System.Server.Extension.Enabled';
+    const CONTENT_TYPE_ENABLED = 'System.Server.ContentType.Enabled';
     /**
      * @throws DirectoryCreateException
      * @throws Exception
@@ -198,20 +200,23 @@ trait Main {
                 }                
             }
         }
-
-        if(!property_exists($options, 'connection')){
-            $options->connection = 'system';
+        $url = $object->config('controller.dir.data') .
+            self::EXTENSION_ENABLED .
+            $object->config('extension.json');
+        $data_extension = $object->data_read($url);
+        $extensions_add = [];
+        $content_types_add = [];
+        if($data_extension){
+            foreach($data_extension->data(self::EXTENSION_ENABLED) as $extension){
+                if(
+                    is_object($extension) &&
+                    property_exists($extension, 'name')){
+                    if(!in_array($extension->extension, $extensions_add, true)){
+                        $extensions_add[] = $extension;
+                    }
+                }
+            }
         }
-        if(!property_exists($options, 'environment')){
-            $options->environment = $object->config('framework.environment');;
-        }
-        if(empty($options->environment)){
-            $options->environment = '*';
-        }
-        $config = Database::config($object);
-        $connection = Database::connection($object, $flags, $options);
-        $connection->manager = Database::entity_manager($object, $config, $connection);
-        $repository = $connection->manager->getRepository('\\Entity\\Extension');
         $url = $object->config('controller.dir.data') .
             self::EXTENSION_ENABLED .
             $object->config('extension.json');
@@ -221,45 +226,67 @@ trait Main {
             foreach($data_extension->data(self::EXTENSION_ENABLED) as $extension){
                 if(
                     is_object($extension) &&
-                    property_exists($extension, 'extension')){
+                    property_exists($extension, 'name')){
                     if(!in_array($extension->extension, $extensions, true)){
                         $extensions[] = $extension->extension;
                     }
                 }
             }
         }
-        $list =$repository->findBy([
-            'name' => $extensions
-        ]);
-        $list_application = [];
-        foreach($list as $nr => $extension){
-            $applications = $extension->getApplications();
-            foreach($applications as $application_nr => $application){
-                if(!in_array($application->getName(), $list_application, true)){
-                    $list_application[] = $application->getName();
+        $class = 'Account.User';
+        $node = new Node($object);
+        $role_system = $node->role_system();
+        $limit = 1;
+        $count = $node->count($class, $role_system);
+        $page_count = 1;
+        if($limit > 0){
+            $page_count = ceil($count / $limit);
+        }
+        if(!is_array($options->sort)){
+            $options->sort = [
+                $options->sort => 'ASC'
+            ];
+        }
+        $sort = $options->sort ?? ['uuid'=> 'ASC'];
+        $filter = $options->filter ?? [];
+        if(empty($filter)){
+            $filter = [];
+        }
+        elseif(!is_array($filter)){
+            throw new Exception('Filter must be an array.');
+        }
+        for($page = 1; $page <= $page_count; $page++) {
+            $response = $node->list($class, $role_system, [
+                'sort' => $sort,
+                'filter' => $filter,
+                'limit' => $limit,
+                'page' => $page
+            ]);
+            d($response);
+            if (
+                $response !== null &&
+                is_array($response) &&
+                array_key_exists('list', $response)
+            ) {
+                foreach ($response['list'] as $nr => $user) {
+                    ddd($user);
+                    $class = 'System.Application';
+                    $role = $node->role_system();
+                    $record = [
+                        "name" => self::NAME,
+                        "user" => [
+                            $user['uuid']
+                        ],
+                        "display" => (object) [
+                            'name' => self::DISPLAY_NAME,
+                        ],
+                        "url" => '',
+                        "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
+                        'description' => 'Audio Player (Playing mp3, wav & ogg)',
+                        'extension' => $extensions,
+                    ];
+                    $response = $node->create($class, $role, $record);
                 }
-            }
-            if(!in_array(self::NAME, $list_application, true)){
-                //adding application to the extension and add extensions to the application
-                $repository = $connection->manager->getRepository('\Entity\Application');
-            $application_url = '{{route.get(\''. self::ROUTE_NAME . '\')}}';
-                $entity_application = $repository->findOneBy([
-                    'url' => $application_url
-                ]);
-                if(!$entity_application){
-                    $entity_application = new \Entity\Application();
-                    $entity_application->setUrl('{{route.get(\''. self::ROUTE_NAME . '\')}}');
-                    $entity_application->setName(self::NAME);
-                    $entity_application->iconUrl(self::ICON_URL);
-                    $entity_application->setExtensions($list);
-                    $connection->manager->persist($entity_application);
-                } else {
-                    $entity_application->setExtensions($list);
-                    $connection->manager->persist($entity_application);
-                }
-                $extension->addApplication($entity_application);
-                $connection->manager->persist($extension);
-                $connection->manager->flush();
             }
         }
         $command = 'app install raxon/account -patch';
