@@ -294,7 +294,7 @@ trait Main {
                     $response = $node->create($class, $role, $record);
                 } else {
                     if([property_exists($options, 'patch') && $options->patch === true]){
-                        $response = $node->patch($class, $role, $exist['node']);
+                        $response = $node->patch($class, $role, $record);
                     }
                 }
             }
