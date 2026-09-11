@@ -201,7 +201,7 @@ trait Main {
             }
         }
         $url = $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json';
-        $read = $object->data->read($url);
+        $read = $object->data_read($url);
         if(!$read){
             throw new Exception('System.Server.Extension.json not found aborting...');
         }
