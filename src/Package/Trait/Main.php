@@ -287,6 +287,17 @@ trait Main {
                     'description' => 'Audio Player (Playing mp3, wav & ogg)',
                     'extension' => $extensions,
                 ];
+                $exist = $node->record($class, $role, [
+                    'where' => [
+                        [
+                            'value' => self::NAME,
+                            'attribute' => 'name',
+                            'operator' => '===',
+                        ]
+                    ]
+                ]);
+                dd($exist);
+
                 $response = $node->create($class, $role, $record);
             }
         }
