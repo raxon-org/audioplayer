@@ -200,6 +200,13 @@ trait Main {
                 }                
             }
         }
+        $url = $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json';
+        $read = $object->data->read($url);
+        if(!$read){
+            throw new Exception('System.Server.Extension.json not found aborting...');
+        }
+        d($read);
+        /*
         $url = $object->config('controller.dir.data') .
             self::EXTENSION_ENABLED .
             $object->config('extension.json');
@@ -217,6 +224,7 @@ trait Main {
                 }
             }
         }
+        */
         $url = $object->config('controller.dir.data') .
             self::EXTENSION_ENABLED .
             $object->config('extension.json');
@@ -228,12 +236,12 @@ trait Main {
                     is_object($extension) &&
                     property_exists($extension, 'name')){
                     if(!in_array($extension->extension, $extensions, true)){
-                        $extensions[] = $extension->uuid;
+                        dd($extension);
+                        $extensions[] = $extension->name;
                     }
                 }
             }
         }
-        ddd($extensions);
         $class = 'Account.User';
         $node = new Node($object);
         $role_system = $node->role_system();
