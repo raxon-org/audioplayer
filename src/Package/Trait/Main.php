@@ -207,6 +207,7 @@ trait Main {
         }
         $list_search = [];
         foreach($read->data() as $extension){
+            dd($extension);           
             $list_search[$extension->name] = $extension->uuid;
         }
         /*
