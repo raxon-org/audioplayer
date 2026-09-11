@@ -296,9 +296,11 @@ trait Main {
                         ]
                     ]
                 ]);
-                dd($exist);
-
-                $response = $node->create($class, $role, $record);
+                if($exist === null){
+                    $response = $node->create($class, $role, $record);
+                } else {
+                    dd($exist);
+                }
             }
         }
         $command = 'app install raxon/account -patch';
