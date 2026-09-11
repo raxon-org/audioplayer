@@ -205,7 +205,10 @@ trait Main {
         if(!$read){
             throw new Exception('System.Server.Extension.json not found aborting...');
         }
-        d($read);
+        $list_search = [];
+        foreach($read->data() as $extension){
+            $list_search[$extension->name] = $extension->uuid;
+        }
         /*
         $url = $object->config('controller.dir.data') .
             self::EXTENSION_ENABLED .
@@ -236,8 +239,9 @@ trait Main {
                     is_object($extension) &&
                     property_exists($extension, 'name')){
                     if(!in_array($extension->extension, $extensions, true)){
-                        dd($extension);
-                        $extensions[] = $extension->name;
+                        if(array_key_exists($extension->name, $list_search)){
+                            $extensions[] = $list_search[$extension->name];
+                        }
                     }
                 }
             }
