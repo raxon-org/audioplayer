@@ -299,6 +299,7 @@ trait Main {
                     ){
                         $record->uuid = $exist['node']->uuid;
                         $response = $node->patch($class, $role, $record);
+                        d($response);
                     }
                 }
             }
