@@ -228,11 +228,12 @@ trait Main {
                     is_object($extension) &&
                     property_exists($extension, 'name')){
                     if(!in_array($extension->extension, $extensions, true)){
-                        $extensions[] = $extension->extension;
+                        $extensions[] = $extension->uuid;
                     }
                 }
             }
         }
+        ddd($extensions);
         $class = 'Account.User';
         $node = new Node($object);
         $role_system = $node->role_system();
