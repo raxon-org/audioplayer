@@ -206,8 +206,8 @@ trait Main {
             throw new Exception('System.Server.Extension.json not found aborting...');
         }
         $list_search = [];
-        foreach($read->data() as $extension){
-            dd($extension);           
+        foreach($read->data('System.Server') as $extension){
+            dd($extension);
             $list_search[$extension->name] = $extension->uuid;
         }
         /*
