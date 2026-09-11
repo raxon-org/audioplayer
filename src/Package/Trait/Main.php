@@ -207,28 +207,8 @@ trait Main {
         }
         $list_search = [];
         foreach($read->data('System.Server.Extension') as $extension){
-            dd($extension);
             $list_search[$extension->name] = $extension->uuid;
         }
-        /*
-        $url = $object->config('controller.dir.data') .
-            self::EXTENSION_ENABLED .
-            $object->config('extension.json');
-        $data_extension = $object->data_read($url);
-        $extensions_add = [];
-        $content_types_add = [];
-        if($data_extension){
-            foreach($data_extension->data(self::EXTENSION_ENABLED) as $extension){
-                if(
-                    is_object($extension) &&
-                    property_exists($extension, 'name')){
-                    if(!in_array($extension->extension, $extensions_add, true)){
-                        $extensions_add[] = $extension;
-                    }
-                }
-            }
-        }
-        */
         $url = $object->config('controller.dir.data') .
             self::EXTENSION_ENABLED .
             $object->config('extension.json');
