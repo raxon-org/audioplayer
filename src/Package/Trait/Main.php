@@ -270,7 +270,7 @@ trait Main {
                 }
                 $class = 'System.Application';
                 $role = $node->role_system();
-                $record = [
+                $record = (object) [
                     "name" => self::NAME,
                     "user" => $user_list,
                     "display" => (object) [
@@ -297,6 +297,7 @@ trait Main {
                         property_exists($options, 'patch') &&
                         $options->patch === true
                     ){
+                        $record->uuid = $exist['node']->uuid;
                         $response = $node->patch($class, $role, $record);
                     }
                 }
