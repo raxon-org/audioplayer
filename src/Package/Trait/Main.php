@@ -277,7 +277,8 @@ trait Main {
                     $host = $response_frontend['node']->domain . '.' . $response_frontend['node']->extension;
                 } else {
                     $host = $response_frontend['node']->subdomain . '.' . $response_frontend['node']->domain . '.' . $response_frontend['node']->extension;
-                }                 
+                }
+                ddd($host);
                 $record = (object) [
                     "name" => self::NAME,
                     "user" => $user_list,
