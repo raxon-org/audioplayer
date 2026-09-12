@@ -270,13 +270,21 @@ trait Main {
                 }
                 $class = 'System.Application';
                 $role = $node->role_system();
+                if(!property_exists($response_frontend['node'],'subdomain')){
+                    $host = $response_frontend['node']->domain . '.' . $response_frontend['node']->extension;
+                }
+                elseif(property_exists($response_frontend['node'],'subdomain') && empty($response_frontend['node']->subdomain)){
+                    $host = $response_frontend['node']->domain . '.' . $response_frontend['node']->extension;
+                } else {
+                    $host = $response_frontend['node']->subdomain . '.' . $response_frontend['node']->domain . '.' . $response_frontend['node']->extension;
+                }                 
                 $record = (object) [
                     "name" => self::NAME,
                     "user" => $user_list,
                     "display" => (object) [
                         'name' => self::DISPLAY_NAME,
                     ],
-                    "url" => '/Application/' . self::NAME . '/',
+                    "url" => $host . '/Application/' . self::NAME . '/',
                     "method" => null,
                     "target" => null,
                     "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
