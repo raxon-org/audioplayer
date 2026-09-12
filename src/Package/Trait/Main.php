@@ -271,14 +271,13 @@ trait Main {
                 $class = 'System.Application';
                 $role = $node->role_system();
                 $host = $options->frontend->host ?? '';
-                ddd($host);
                 $record = (object) [
                     "name" => self::NAME,
                     "user" => $user_list,
                     "display" => (object) [
                         'name' => self::DISPLAY_NAME,
                     ],
-                    "url" => $host . '/Application/' . self::NAME . '/',
+                    "url" => 'https://' . $host . '/Application/' . self::NAME . '/',
                     "method" => null,
                     "target" => null,
                     "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
