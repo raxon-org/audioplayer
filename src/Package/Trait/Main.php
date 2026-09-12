@@ -276,7 +276,9 @@ trait Main {
                     "display" => (object) [
                         'name' => self::DISPLAY_NAME,
                     ],
-                    "url" => '',
+                    "url" => '/Application/' . self::NAME . '/',
+                    "method" => null,
+                    "target" => null,
                     "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
                     'description' => 'Audio Player (Playing mp3, wav & ogg)',
                     'extension' => $extensions,
@@ -292,6 +294,7 @@ trait Main {
                 ]);
                 if($exist === null){
                     $response = $node->create($class, $role, $record);
+                    echo $record->name . ' created...' . PHP_EOL;
                 } else {
                     if(
                         property_exists($options, 'patch') &&
@@ -299,7 +302,7 @@ trait Main {
                     ){
                         $record->uuid = $exist['node']->uuid;
                         $response = $node->patch($class, $role, $record);
-                        d($response);
+                        echo $record->name . ' patched...' . PHP_EOL;
                     }
                 }
             }
