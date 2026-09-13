@@ -268,44 +268,44 @@ trait Main {
                 foreach ($response['list'] as $nr => $user) {
                     $user_list[] = $user->uuid ?? null;
                 }
-                $class = 'System.Application';
-                $role = $node->role_system();
-                $host = $options->frontend->host ?? '';
-                $record = (object) [
-                    "name" => self::NAME,
-                    "user" => $user_list,
-                    "display" => (object) [
-                        'name' => self::DISPLAY_NAME,
-                    ],
-                    "url" => 'https://' . $host . '/Application/' . self::NAME . '/',
-                    "method" => null,
-                    "target" => null,
-                    "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
-                    'description' => 'Audio Player (Playing mp3, wav & ogg)',
-                    'extension' => $extensions,
-                ];
-                $exist = $node->record($class, $role, [
-                    'where' => [
-                        [
-                            'value' => self::NAME,
-                            'attribute' => 'name',
-                            'operator' => '===',
-                        ]
-                    ]
-                ]);
-                if($exist === null){
-                    $response = $node->create($class, $role, $record);
-                    echo $record->name . ' created...' . PHP_EOL;
-                } else {
-                    if(
-                        property_exists($options, 'patch') &&
-                        $options->patch === true
-                    ){
-                        $record->uuid = $exist['node']->uuid;
-                        $response = $node->patch($class, $role, $record);
-                        echo $record->name . ' patched...' . PHP_EOL;
-                    }
-                }
+            }
+        }
+        $class = 'System.Application';
+        $role = $node->role_system();
+        $record = (object) [
+            "name" => self::NAME,
+            "user" => $user_list,
+            "display" => (object) [
+                'name' => self::DISPLAY_NAME,
+            ],
+            "directory" => '/Application/' . self::NAME . '/',
+            "method" => null,
+            "target" => null,
+            "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
+            'description' => 'Audio Player (Playing mp3, wav & ogg)',
+            'extension' => $extensions,
+        ];
+        ddd($response_frontend);
+        $exist = $node->record($class, $role, [
+            'where' => [
+                [
+                    'value' => self::NAME,
+                    'attribute' => 'name',
+                    'operator' => '===',
+                ]
+            ]
+        ]);
+        if($exist === null){
+            $response = $node->create($class, $role, $record);
+            echo $record->name . ' created...' . PHP_EOL;
+        } else {
+            if(
+                property_exists($options, 'patch') &&
+                $options->patch === true
+            ){
+                $record->uuid = $exist['node']->uuid;
+                $response = $node->patch($class, $role, $record);
+                echo $record->name . ' patched...' . PHP_EOL;
             }
         }
         $command = 'app install raxon/account -patch';
