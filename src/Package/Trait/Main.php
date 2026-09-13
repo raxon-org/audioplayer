@@ -288,9 +288,9 @@ trait Main {
             'extension' => $extensions,
         ];
         $environment = $object->config('framework.environment');
-        if(array_key_exists($environment, $response_frontend['node']->url)){
-            $record->url = $response_frontend['node']->url[$environment] . $record->directory->application;
-            $record->icon_url = $response_frontend['node']->url[$environment] . $record->directory->icon;
+        if(property_exists($response_frontend['node']->url, $environment)){
+            $record->url = $response_frontend['node']->url->{$environment} . $record->directory->application;
+            $record->icon_url = $response_frontend['node']->url->{$environment} . $record->directory->icon;
         }
         $exist = $node->record($class, $role, [
             'where' => [
