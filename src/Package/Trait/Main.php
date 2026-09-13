@@ -252,6 +252,7 @@ trait Main {
         elseif(!is_array($filter)){
             throw new Exception('Filter must be an array.');
         }
+        $user_list = [];
         for($page = 1; $page <= $page_count; $page++) {
             $response = $node->list($class, $role_system, [
                 'sort' => $sort,
@@ -264,7 +265,6 @@ trait Main {
                 is_array($response) &&
                 array_key_exists('list', $response)
             ) {
-                $user_list = [];
                 foreach ($response['list'] as $nr => $user) {
                     $user_list[] = $user->uuid ?? null;
                 }
@@ -278,14 +278,17 @@ trait Main {
             "display" => (object) [
                 'name' => self::DISPLAY_NAME,
             ],
-            "directory" => '/Application/' . self::NAME . '/',
+            "directory" => 'Application/' . self::NAME . '/',
             "method" => null,
             "target" => null,
             "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
             'description' => 'Audio Player (Playing mp3, wav & ogg)',
             'extension' => $extensions,
         ];
-        ddd($response_frontend);
+        $record->url = [];
+        foreach($response_backend['node']->url as $url){
+            $record->url[] = $url . $record->directory;
+        }
         $exist = $node->record($class, $role, [
             'where' => [
                 [
