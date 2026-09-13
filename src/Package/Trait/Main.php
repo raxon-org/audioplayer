@@ -273,27 +273,24 @@ trait Main {
         $class = 'System.Application';
         $role = $node->role_system();
         $record = (object) [
-            "name" => self::NAME,
-            "user" => $user_list,
-            "display" => (object) [
+            'name' => self::NAME,
+            'user' => $user_list,
+            'display' => (object) [
                 'name' => self::DISPLAY_NAME,
             ],
-            "directory" => 'Application/' . self::NAME . '/',
-            "method" => null,
-            "target" => null,
-            "icon_url" => '/Application/' . self::NAME . '/Icon/Icon.png',
+            'directory' => (object) [
+                'application' => 'Application/' . self::NAME . '/',
+                'icon' => '/Application/' . self::NAME . '/Icon/Icon.png',
+            ],
+            'method' => null,
+            'target' => null,
             'description' => 'Audio Player (Playing mp3, wav & ogg)',
             'extension' => $extensions,
         ];
-        d($response_frontend);
         $environment = $object->config('framework.environment');
-        ddd($environment);
-        $record->url = (object) [];
-
-
-
-        foreach($response_frontend['node']->url as $environment => $url){
-            $record->url = $url . $record->directory;
+        if(array_key_exists($environment, $response_frontend['node']->url)){
+            $record->url = $response_frontend['node']->url[$environment] . $record->directory->application;
+            $record->icon_url = $response_frontend['node']->url[$environment] . $record->directory->icon;
         }
         $exist = $node->record($class, $role, [
             'where' => [
