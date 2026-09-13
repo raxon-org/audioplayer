@@ -45,54 +45,12 @@ trait Main {
         if($object->config(Config::POSIX_ID) !== 0){
             return;
         }
-        $has_frontend = false;
-        $frontend_options = [];
-        $backend_options = [];
-        if(property_exists($options, 'frontend')){
-            if(property_exists($options->frontend, 'host')){                
-                $has_frontend = true;
-                $frontend_options = [
-                    'where' => [
-                        [
-                            'value' => $options->frontend->host,
-                            'attribute' => 'name',
-                            'operator' => 'partial',
-                        ]
-                    ]
-                ];
-            }                
-        }        
-        $has_backend = false;
-        if(property_exists($options, 'backend')){
-            if(property_exists($options->backend, 'host')){                
-                $has_backend = true;
-                $backend_options = [
-                    'where' => [
-                        [
-                            'value' => $options->backend->host,
-                            'attribute' => 'name',
-                            'operator' => 'partial',
-                        ]
-                    ]
-                ];                
-            }
-        }
-        if($has_frontend === false){
-            throw new Exception('Frontend.host option is required and must be defined in Node/System.Host.json aborting...');
-        }
-        if($has_backend === false){
-            throw new Exception('Backend.host option is required and must be defined in Node/System.Host.json aborting...');
-        }
-
-        $class = 'System.Host';
-        $node = new Node($object);
-        $response_frontend = $node->record($class, $node->role_system(), $frontend_options);
-        $response_backend = $node->record($class, $node->role_system(), $backend_options);
+        $options->frontend = $this->install_frontend_get($options);
+        $options->backend = $this->install_backend_get($options);
         $options->package = self::PACKAGE;
-        $options->frontend = $response_frontend['node'] ?? null;
-        $options->backend = $response_backend['node'] ?? null;
         $this->install_api($options);
         $this->install_application($options);
+        /*
         $list = User::list($object, User::ROLES_ALLOWED);
         Navigation::create($object, $list, (object)[
             'name' => self::NAME,
@@ -100,6 +58,7 @@ trait Main {
                 'name' => self::ROUTE_NAME,
             ]
         ]);
+        */
         $this->system_application($flags, $options);
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
