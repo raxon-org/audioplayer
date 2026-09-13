@@ -285,8 +285,9 @@ trait Main {
             'description' => 'Audio Player (Playing mp3, wav & ogg)',
             'extension' => $extensions,
         ];
-        $record->url = [];
-        foreach($response_backend['node']->url as $url){
+        ddd($response_frontend);
+        $record->url = (object) [];
+        foreach($response_frontend['node']->url as $url){
             $record->url[] = $url . $record->directory;
         }
         $exist = $node->record($class, $role, [
