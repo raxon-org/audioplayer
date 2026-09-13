@@ -1,12 +1,16 @@
 <?php
 namespace Package\Raxon\Audioplayer\Trait;
 
+use Package\Raxon\Account\Module\User;
+use Package\Raxon\Desktop\Module\Navigation;
+use Package\Raxon\Basic\Trait\Install;
 use Raxon\App;
 use Raxon\Config;
 
 use Raxon\Doctrine\Module\Database;
 use Raxon\Exception\DirectoryCreateException;
 
+use Raxon\Exception\ObjectException;
 use Raxon\Module\Cli;
 use Raxon\Module\Data;
 use Raxon\Module\Destination;
@@ -23,10 +27,14 @@ use Exception;
 trait Main {
     const NAME = 'Audioplayer';
     const DISPLAY_NAME = 'Audio Player';
+    const DESCRIPTION = 'Audio Player (Playing mp3, wav & ogg)';
     const ROUTE_NAME = 'application-audio-player';
     const ICON_URL = '/Application/Audioplayer/Icon/Icon.png';
     const EXTENSION_ENABLED = 'System.Server.Extension.Enabled';
     const CONTENT_TYPE_ENABLED = 'System.Server.ContentType.Enabled';
+
+    use Install;
+
     /**
      * @throws DirectoryCreateException
      * @throws Exception
@@ -200,6 +208,34 @@ trait Main {
                 }                
             }
         }
+        $options->frontend = $response_frontend['node'];
+        $options->backend = $response_backend['node'];
+        $this->install_api($options);
+        $this->install_application($options);
+        $list = User::list($object, User::ROLES_ALLOWED);
+        Navigation::create($object, $list, (object)[
+            'name' => self::NAME,
+            'route' => (object) [
+                'name' => self::ROUTE_NAME,
+            ]
+        ]);
+        $this->system_application($flags, $options);
+        $command = 'app install raxon/account -patch';
+        Core::execute($object, $command, $output, $notification);
+        if($output){
+            echo $output;
+        }
+        if($notification){
+            echo $notification;
+        }
+    }
+
+    /**
+     * @throws ObjectException
+     * @throws Exception
+     */
+    public function system_application(object $flags, object $options, $response_backend=null, $response_frontend=null){
+        $object = $this->object();
         $url = $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json';
         $read = $object->data_read($url);
         if(!$read){
@@ -284,13 +320,13 @@ trait Main {
             ],
             'method' => null,
             'target' => null,
-            'description' => 'Audio Player (Playing mp3, wav & ogg)',
+            'description' => self::DESCRIPTION,
             'extension' => $extensions,
         ];
         $environment = $object->config('framework.environment');
-        if(property_exists($response_frontend['node']->url, $environment)){
-            $record->url = $response_frontend['node']->url->{$environment} . $record->directory->application;
-            $record->icon_url = $response_frontend['node']->url->{$environment} . $record->directory->icon;
+        if(property_exists($options->frontend->url, $environment)){
+            $record->url = $options->frontend->url->{$environment} . $record->directory->application;
+            $record->icon_url = $options->frontend->url->{$environment} . $record->directory->icon;
         }
         $exist = $node->record($class, $role, [
             'where' => [
@@ -313,14 +349,6 @@ trait Main {
                 $response = $node->patch($class, $role, $record);
                 echo $record->name . ' patched...' . PHP_EOL;
             }
-        }
-        $command = 'app install raxon/account -patch';
-        Core::execute($object, $command, $output, $notification);
-        if($output){
-            echo $output;
-        }
-        if($notification){
-            echo $notification;
         }
     }
 
