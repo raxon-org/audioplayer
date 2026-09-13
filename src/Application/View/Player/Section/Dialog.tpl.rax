@@ -27,7 +27,7 @@
     </div>
     <div class="menu-application-audio-player">
         <ul>
-            <li title="{{$request.file|>file.basename}}">{{$request.file|>default:''|>file.basename}}</li>
+            <li title="{{$request.file|>default:''|>file.basename}}">{{$request.file|>default:''|>file.basename}}</li>
         </ul>
     </div>
     <div class="body">
