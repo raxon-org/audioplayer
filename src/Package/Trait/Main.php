@@ -285,10 +285,15 @@ trait Main {
             'description' => 'Audio Player (Playing mp3, wav & ogg)',
             'extension' => $extensions,
         ];
-        ddd($response_frontend);
+        d($response_frontend);
+        $environment = $object->config('framework.environment');
+        ddd($environment);
         $record->url = (object) [];
-        foreach($response_frontend['node']->url as $url){
-            $record->url[] = $url . $record->directory;
+
+
+
+        foreach($response_frontend['node']->url as $environment => $url){
+            $record->url = $url . $record->directory;
         }
         $exist = $node->record($class, $role, [
             'where' => [
