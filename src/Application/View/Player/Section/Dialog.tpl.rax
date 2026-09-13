@@ -35,7 +35,7 @@
         {{$source.request = $source.request|>url.encode}}
         {{$source.src = server.url(\"{{/literal}}{{$backend.host}}{{literal}}\") + 'FileSystem/?url='+ $source.request}}
         {{$source.type = source.type($request.file|>default:'a.mp3')}}
-        <input type="hidden" name="node.url" value="{{$request.file|default:''}}" />
+        <input type="hidden" name="node.url" value="{{$request.file}}" />
         <input type="hidden" name="node.source" value="{{$source.src}}" />
         <input type="hidden" name="node.type" value="{{$source.type}}" />
         /*
