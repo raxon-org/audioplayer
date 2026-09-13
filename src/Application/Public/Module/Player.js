@@ -2,7 +2,9 @@ import { taskbar } from "/Application/Desktop/Module/Taskbar.js";
 import { getSectionById } from "/Module/Section.js";
 import { dialog } from "/Dialog/Module/Dialog.js";
 import { file } from "/Application/Filemanager/Module/File.js";
+import { root } from "/Module/Web.js";
 import user from "/Module/User.js";
+
 
 let player = {};
 
@@ -77,6 +79,9 @@ player.menu = (id) => {
             if(menu_file_protector){
                 menu_file_protector.trigger('click');
             }
+            let open_url = root() + 'Application/Filemanager/Select/';
+            console.log(open_url);
+            console.log('need application file manager open url');
             console.log('need application file manager open url');
             console.log(file);
             /*
