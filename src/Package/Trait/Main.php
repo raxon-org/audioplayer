@@ -61,7 +61,10 @@ trait Main {
                 ]
             ]
         );
-        $this->system_application($flags, $options);
+        $this->install_system_application(
+            $flags,
+            $options
+        );
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
         if($output){
@@ -76,9 +79,13 @@ trait Main {
      * @throws ObjectException
      * @throws Exception
      */
-    public function system_application(object $flags, object $options, $response_backend=null, $response_frontend=null){
+    public function install_system_application(object $flags, object $options){
         $object = $this->object();
-        $url = $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json';
+        if(property_exists($options, 'url')){
+            $url = $options->url;
+        } else {
+            $url = $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json';
+        }
         $read = $object->data_read($url);
         if(!$read){
             throw new Exception('System.Server.Extension.json not found aborting...');
@@ -87,10 +94,21 @@ trait Main {
         foreach($read->data('System.Server.Extension') as $extension){
             $list_search[$extension->name] = $extension->uuid;
         }
-        $url = $object->config('controller.dir.data') .
-            self::EXTENSION_ENABLED .
-            $object->config('extension.json');
-        $data_extension = $object->data_read($url);
+        if(!property_exists($options, 'controller')){
+            $url_controller = $object->config('controller.dir.data') .
+                self::EXTENSION_ENABLED .
+                $object->config('extension.json');
+        }
+        elseif(!property_exists($options->controller, 'url')){
+            $url_controller = $object->config('controller.dir.data') .
+                self::EXTENSION_ENABLED .
+                $object->config('extension.json');
+        } else {
+            $url_controller = $object->config('controller.dir.data') .
+                self::EXTENSION_ENABLED .
+                $object->config('extension.json');
+        }
+        $data_extension = $object->data_read($url_controller);
         $extensions = [];
         if($data_extension){
             foreach($data_extension->data(self::EXTENSION_ENABLED) as $extension){
