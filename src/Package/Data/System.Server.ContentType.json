@@ -2,28 +2,27 @@
   "System": {
     "Server": {
       "ContentType": [
-            {
-              "description": "Content-Type for Wav file",
-              "type": "audio\/wav",
-              "extension": ".wav"
-            },
-            {
-              "description": "Content-Type for Mp3 file",
-              "type": "audio/mp3",
-              "extension": ".mp3"
-            },
-            {
-              "description": "Content-Type for Ogg Vorbis file",
-              "name": "audio/ogg",
-              "extension": ".ogg"
-            },
-            {
-              "description": "Gzip Wav file",
-              "name": "audio/gzwav",
-              "extension": ".gzwav"
-            }
-        ]
-      }
+          {
+            "description": "Content-Type for Wav file",
+            "content_type": "audio\/wav",
+            "extension": ".wav"
+          },
+          {
+            "description": "Content-Type for Mp3 file",
+            "content_type": "audio/mp3",
+            "extension": ".mp3"
+          },
+          {
+            "description": "Content-Type for Ogg Vorbis file",
+            "content_type": "audio/ogg",
+            "extension": ".ogg"
+          },
+          {
+            "description": "Gzip Wav file",
+            "content_type": "audio/gzwav",
+            "extension": ".gzwav"
+          }
+      ]
     }
   }
 }
