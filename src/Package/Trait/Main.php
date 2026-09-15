@@ -48,6 +48,10 @@ trait Main {
         $options->frontend = $this->install_frontend_get($options);
         $options->backend = $this->install_backend_get($options);
         $options->package = self::PACKAGE;
+        $options->url = (object) [
+            'node' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json',
+            'controller' => $object->config('controller.dir.data') . self::EXTENSION_ENABLED . $object->config('extension.json'),
+        ];
         $this->install_api($options);
         $this->install_application($options);
         $list = User::list($object, User::ROLES_ALLOWED);
@@ -63,7 +67,8 @@ trait Main {
         );
         $this->install_system_application(
             $flags,
-            $options
+            $options,
+
         );
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
@@ -79,44 +84,35 @@ trait Main {
      * @throws ObjectException
      * @throws Exception
      */
-    public function install_system_application(object $flags, object $options){
+    public function install_system_application(object $flags, object $options)
+    {
         $object = $this->object();
-        if(property_exists($options, 'url')){
-            $url = $options->url;
-        } else {
-            $url = $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json';
+        if(!property_exists('url', $options)){
+            throw new Exception('Option -url not set');
         }
-        $read = $object->data_read($url);
-        if(!$read){
+        if (!property_exists($options->url, 'node')) {
+            throw new Exception('Option -url.node not set');
+        }
+        if(!property_exists($options->url, 'controller')){
+            throw new Exception('Option -url.controller not set');
+        }
+        $read = $object->data_read($options->url->node);
+        if (!$read) {
             throw new Exception('System.Server.Extension.json not found aborting...');
         }
         $list_search = [];
-        foreach($read->data('System.Server.Extension') as $extension){
+        foreach ($read->data('System.Server.Extension') as $extension) {
             $list_search[$extension->name] = $extension->uuid;
         }
-        if(!property_exists($options, 'controller')){
-            $url_controller = $object->config('controller.dir.data') .
-                self::EXTENSION_ENABLED .
-                $object->config('extension.json');
-        }
-        elseif(!property_exists($options->controller, 'url')){
-            $url_controller = $object->config('controller.dir.data') .
-                self::EXTENSION_ENABLED .
-                $object->config('extension.json');
-        } else {
-            $url_controller = $object->config('controller.dir.data') .
-                self::EXTENSION_ENABLED .
-                $object->config('extension.json');
-        }
-        $data_extension = $object->data_read($url_controller);
+        $data_extension = $object->data_read($options->url->controller);
         $extensions = [];
-        if($data_extension){
-            foreach($data_extension->data(self::EXTENSION_ENABLED) as $extension){
-                if(
+        if ($data_extension) {
+            foreach ($data_extension->data(self::EXTENSION_ENABLED) as $extension) {
+                if (
                     is_object($extension) &&
-                    property_exists($extension, 'name')){
-                    if(!in_array($extension->extension, $extensions, true)){
-                        if(array_key_exists($extension->name, $list_search)){
+                    property_exists($extension, 'name')) {
+                    if (!in_array($extension->extension, $extensions, true)) {
+                        if (array_key_exists($extension->name, $list_search)) {
                             $extensions[] = $list_search[$extension->name];
                         }
                     }
@@ -129,27 +125,26 @@ trait Main {
         $limit = 100;
         $count = $node->count($class, $role_system);
         $page_count = 1;
-        if($limit > 0){
+        if ($limit > 0) {
             $page_count = ceil($count / $limit);
         }
-        if(!property_exists($options, 'sort')){
+        if (!property_exists($options, 'sort')) {
             $options->sort = 'uuid';
         }
-        if(!is_array($options->sort)){
+        if (!is_array($options->sort)) {
             $options->sort = [
                 $options->sort => 'ASC'
             ];
         }
-        $sort = $options->sort ?? ['uuid'=> 'ASC'];
+        $sort = $options->sort ?? ['uuid' => 'ASC'];
         $filter = $options->filter ?? [];
-        if(empty($filter)){
+        if (empty($filter)) {
             $filter = [];
-        }
-        elseif(!is_array($filter)){
+        } elseif (!is_array($filter)) {
             throw new Exception('Filter must be an array.');
         }
         $user_list = [];
-        for($page = 1; $page <= $page_count; $page++) {
+        for ($page = 1; $page <= $page_count; $page++) {
             $response = $node->list($class, $role_system, [
                 'sort' => $sort,
                 'filter' => $filter,
@@ -168,13 +163,13 @@ trait Main {
         }
         $class = 'System.Application';
         $role = $node->role_system();
-        $record = (object) [
+        $record = (object)[
             'name' => self::NAME,
             'user' => $user_list,
-            'display' => (object) [
+            'display' => (object)[
                 'name' => self::DISPLAY_NAME,
             ],
-            'directory' => (object) [
+            'directory' => (object)[
                 'application' => 'Application/' . self::NAME . '/',
                 'icon' => '/Application/' . self::NAME . '/Icon/Icon.png',
             ],
@@ -184,9 +179,11 @@ trait Main {
             'extension' => $extensions,
         ];
         $environment = $object->config('framework.environment');
-        if(property_exists($options->frontend->url, $environment)){
+        if (property_exists($options->frontend->url, $environment)) {
             $record->url = $options->frontend->url->{$environment} . $record->directory->application;
             $record->icon_url = $options->frontend->url->{$environment} . $record->directory->icon;
+        } else {
+            throw new Exception('Frontend url not set for environment: ' . $environment);
         }
         $exist = $node->record($class, $role, [
             'where' => [
@@ -197,43 +194,18 @@ trait Main {
                 ]
             ]
         ]);
-        if($exist === null){
+        if ($exist === null) {
             $response = $node->create($class, $role, $record);
             echo $record->name . ' created...' . PHP_EOL;
         } else {
-            if(
+            if (
                 property_exists($options, 'patch') &&
                 $options->patch === true
-            ){
+            ) {
                 $record->uuid = $exist['node']->uuid;
                 $response = $node->patch($class, $role, $record);
                 echo $record->name . ' patched...' . PHP_EOL;
             }
         }
     }
-
-    public function connection(object $flags, null|object $options = null): object
-    {
-        $object = $this->object();
-        $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
-        if($connection === null){
-            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
-        }
-        if($connection === null){
-            throw new Exception('Connection not found aborting...');
-        }$connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
-        if($connection === null){
-            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
-        }
-        if($connection === null){
-            throw new Exception('Connection not found aborting...');
-        }
-        foreach($connection as $key => $value){
-            if(substr($key, 0, 1) === '#'){
-                unset($connection->{$key});
-            }
-        }
-        return $connection;
-    }
-
 }
