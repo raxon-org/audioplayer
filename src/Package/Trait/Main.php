@@ -87,7 +87,7 @@ trait Main {
     public function install_system_application(object $flags, object $options)
     {
         $object = $this->object();
-        if(!property_exists('url', $options)){
+        if(!property_exists($options, 'url')){
             throw new Exception('Option -url not set');
         }
         if (!property_exists($options->url, 'node')) {
