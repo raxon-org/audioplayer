@@ -24,7 +24,7 @@ use Raxon\Node\Module\Node;
 
 use Exception;
 
-trait Main {
+trait Setup {
     const NAME = 'Audioplayer';
     const DISPLAY_NAME = 'Audio Player';
     const DESCRIPTION = 'Audio Player (Playing mp3, wav & ogg)';
