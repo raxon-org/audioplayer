@@ -84,7 +84,7 @@ trait Setup {
      * @throws ObjectException
      * @throws Exception
      */
-    public function install_system_application(object $flags, object $options)
+    public function install_system_application(object $flags, object $options): void
     {
         $object = $this->object();
         if(!property_exists($options, 'url')){
