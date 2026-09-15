@@ -50,15 +50,17 @@ trait Main {
         $options->package = self::PACKAGE;
         $this->install_api($options);
         $this->install_application($options);
-        /*
         $list = User::list($object, User::ROLES_ALLOWED);
-        Navigation::create($object, $list, (object)[
-            'name' => self::NAME,
-            'route' => (object) [
-                'name' => self::ROUTE_NAME,
+        Navigation::create(
+            $object,
+            $list,
+            (object)[
+                'name' => self::NAME,
+                'route' => (object) [
+                    'name' => self::ROUTE_NAME,
+                ]
             ]
-        ]);
-        */
+        );
         $this->system_application($flags, $options);
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
