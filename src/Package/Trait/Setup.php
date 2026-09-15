@@ -49,8 +49,10 @@ trait Setup {
         $options->backend = $this->install_backend_get($options);
         $options->package = self::PACKAGE;
         $options->url = (object) [
-            'node' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension.json',
-            'controller' => $object->config('controller.dir.data') . self::EXTENSION_ENABLED . $object->config('extension.json'),
+            'node_extension' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension' . $object->config('extension.json'),
+            'node_content_type' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.ContentType' . $object->config('extension.json'),
+            'extension' => $object->config('controller.dir.data') . 'System.Server.Extension' . $object->config('extension.json'),
+            'content_type' => $url = $object->config('controller.dir.data') . 'System.Server.ContentType' . $object->config('extension.json')
         ];
         $this->install_api($options);
         $this->install_application($options);
@@ -68,7 +70,6 @@ trait Setup {
         $this->install_system_application(
             $flags,
             $options,
-
         );
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);

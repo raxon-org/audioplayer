@@ -1,8 +1,7 @@
 {
   "System": {
     "Server": {
-      "ContentType": {
-        "Enabled": [
+      "ContentType": [
             {
               "description": "Content-Type for Wav file",
               "type": "audio\/wav",
