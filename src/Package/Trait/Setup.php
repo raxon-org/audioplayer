@@ -149,8 +149,13 @@ trait Setup {
     public function extension_list($flags, $options): string
     {
         $object = $this->object();
-        dd($options);
-        $read = $object->data_read($options->url->node_extension);
+        $url = $object->config('project.dir.node') .
+            'Data' .
+            $object->config('ds') .
+            'System.Server.Extension' .
+            $object->config('extension.json')
+        ;
+        $read = $object->data_read($url);
         if (!$read) {
             throw new Exception('Node: System.Server.Extension.json not found aborting...');
         }
@@ -161,7 +166,11 @@ trait Setup {
             $active[] = $extension->name;
             $list_search[$extension->name] = $extension->uuid;
         }
-        $data_extension = $object->data_read($options->url->extension);
+        $url = $object->config('controller.dir.data') .
+            'System.Server.Extension' .
+            $object->config('extension.json')
+        ;
+        $data_extension = $object->data_read($url);
         if(!$data_extension){
             throw new Exception('Node (Import): System.Server.Extension.json not found aborting...');
         }
