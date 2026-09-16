@@ -55,6 +55,7 @@ trait Setup {
             'content_type' => $object->config('controller.dir.data') . 'System.Server.ContentType' . $object->config('extension.json'),
             'system_application' => $object->config('controller.dir.data') . 'System.Application' . $object->config('extension.json')
         ];
+        $object->config(App::OPTIONS, $options);
         $this->install_api($options);
         $this->install_application($options);
         $list = User::list($object, User::ROLES_ALLOWED);
