@@ -8,8 +8,8 @@
           "name": "Audio Player"
         },
         "directory": {
-          "application": "Application/{{$this.parent.name}}/",
-          "icon": "Application/{{$this.parent.name}}/Icon/Icon.png"
+          "application": "Application/{{$this.#parent.name}}/",
+          "icon": "Application/{{$this.#parent.name}}/Icon/Icon.png"
         },
         "method": null,
         "target": null,
