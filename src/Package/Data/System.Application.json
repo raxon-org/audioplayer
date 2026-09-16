@@ -1,0 +1,19 @@
+{
+  "Setup": [
+    {
+      "name": "Audioplayer",
+      "user": "{{Package.Raxon.Audioplayer:Setup:user.list($flags, $options)}}",
+      "display": {
+        "name": "Audio Player"
+      },
+      "directory": {
+        "application": "Application/{{$this.name}}/",
+        "icon": "Application/{{$this.name}}/Icon/Icon.png"
+      },
+      "method": null,
+      "target": null,
+      "description": "Audio Player (Playing mp3, wav & ogg)",
+      "extension": "{{Package.Raxon.Audioplayer:Setup:extension.list($flags, $options)}}"
+    }
+  ]
+}
