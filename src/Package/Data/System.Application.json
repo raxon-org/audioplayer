@@ -1,8 +1,9 @@
 {
-  "System": {
-    "Application" :[
+  "System":{
+    "Application":[
       {
         "name": "Audioplayer",
+        "user": "{{Package.Raxon.AudioPlayer:Setup:user.list($flags, $options)}}",
         "display": {
           "name": "Audio Player"
         },
@@ -12,7 +13,8 @@
         },
         "method": null,
         "target": null,
-        "description": "Audio Player (Playing mp3, wav & ogg)"
+        "description": "Audio Player (Playing mp3, wav & ogg)",
+        "extension": "{{Package.Raxon.AudioPlayer:Setup:extension.list($flags, $options)}}"
       }
     ]
   }
