@@ -148,6 +148,7 @@ trait Setup {
     public function extension_list($flags, $options): string
     {
         $object = $this->object();
+        dd($options);
         $read = $object->data_read($options->url->node_extension);
         if (!$read) {
             throw new Exception('Node: System.Server.Extension.json not found aborting...');
