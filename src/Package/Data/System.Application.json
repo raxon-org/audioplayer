@@ -8,8 +8,8 @@
         },
         "package": "raxon/{{$this.name|>string.lowercase}}",
         "directory": {
-          "application": "Application/{{$this.name}}/",
-          "icon": "Application/{{$this.name}}/Icon/Icon.png"
+          "application": "Application/{{$this.#parentNode.name}}/",
+          "icon": "Application/{{$this.#parentNode.name}}/Icon/Icon.png"
         },
         "url": {
           "node_extension" : "{{config('project.dir.node')}}Data/System.Server.Extension.json",

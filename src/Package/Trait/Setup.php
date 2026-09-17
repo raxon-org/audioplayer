@@ -93,7 +93,6 @@ trait Setup {
      */
     public function user_list(object $flags, object $options, $application): string
     {
-        d($application);
         $object = $this->object();
         $class = 'Account.User';
         $node = new Node($object);
@@ -153,20 +152,17 @@ trait Setup {
      */
     public function extension_list($flags, $options, $application): string
     {
-        ddd($application);
-
         $object = $this->object();
-
-        if(!property_exists($options, 'url')){
+        if(!property_exists($application, 'url')){
             throw new Exception('Option -url not set');
         }
-        if(!property_exists($options->url, 'node_extension')){
+        if(!property_exists($application->url, 'node_extension')){
             throw new Exception('Option -url.node_extension not set');
         }
-        if(!property_exists($options->url, 'extension')){
+        if(!property_exists($application->url, 'extension')){
             throw new Exception('Option -url.extension not set');
         }
-        $url = $options->url->node_extension;
+        $url = $application->url->node_extension;
         $read = $object->data_read($url);
         if (!$read) {
             throw new Exception('Node: System.Server.Extension.json not found aborting...');
@@ -178,7 +174,7 @@ trait Setup {
             $active[] = $extension->name;
             $list_search[$extension->name] = $extension->uuid;
         }
-        $url = $options->url->extension;
+        $url = $application->url->extension;
         $data_extension = $object->data_read($url);
         if(!$data_extension){
             throw new Exception('Node (Import): System.Server.Extension.json not found aborting...');
