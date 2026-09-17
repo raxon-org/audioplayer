@@ -175,7 +175,6 @@ trait Setup {
             $list_search[$extension->name] = $extension->uuid;
         }
         $url = $application->url->extension;
-        ddd($url);
         $data_extension = $object->data_read($url);
         if(!$data_extension){
             throw new Exception('Node (Import): System.Server.Extension.json not found aborting...');
