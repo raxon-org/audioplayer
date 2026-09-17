@@ -7,6 +7,8 @@
           "name": "Audio Player"
         },
         "package": "raxon/{{$this.name|>string.lowercase}}",
+        "frontend": "{{raw|>Package.Raxon.AudioPlayer:Setup:install_frontend_get(options())}}",
+        "backend": "{{raw|>Package.Raxon.AudioPlayer:Setup:install_backend_get(options())}}",
         "directory": {
           "name": "test",
           "application": "Application/{{$this.name}}/",

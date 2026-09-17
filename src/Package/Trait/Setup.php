@@ -45,8 +45,8 @@ trait Setup {
         if($object->config(Config::POSIX_ID) !== 0){
             return;
         }
-        $options->frontend = $this->install_frontend_get($options);
-        $options->backend = $this->install_backend_get($options);
+//        $options->frontend = $this->install_frontend_get($options);
+//        $options->backend = $this->install_backend_get($options);
         //$options->package = self::PACKAGE;
         /*
         $options->url = (object) [
@@ -58,13 +58,16 @@ trait Setup {
         ];
         */
         $object->data(App::OPTIONS, $options);
-        $application = $this->install_system_application(
+        $application_list = $this->install_system_application(
             $flags,
             $options,
         );
 //        $this->object($object);
-        $this->install_api($options, $application);
-        $this->install_application($options, $application);
+        foreach($application_list as $application){
+            $this->install_api($options, $application);
+            $this->install_application($options, $application);
+        }
+
         $list = User::list($object, User::ROLES_ALLOWED);
         Navigation::create(
             $object,
