@@ -91,8 +91,9 @@ trait Setup {
      * @throws ObjectException
      * @throws Exception
      */
-    public function user_list($flags, $options): string
+    public function user_list(object $flags, object $options, $application): string
     {
+        d($application);
         $object = $this->object();
         $class = 'Account.User';
         $node = new Node($object);
@@ -150,9 +151,12 @@ trait Setup {
      * @throws ObjectException
      * @throws Exception
      */
-    public function extension_list($flags, $options): string
+    public function extension_list($flags, $options, $application): string
     {
+        ddd($application);
+
         $object = $this->object();
+
         if(!property_exists($options, 'url')){
             throw new Exception('Option -url not set');
         }
