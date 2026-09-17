@@ -62,7 +62,6 @@ trait Setup {
             $flags,
             $options,
         );
-        ddd($application);
 //        $this->object($object);
         $this->install_api($options, $application);
         $this->install_application($options, $application);
