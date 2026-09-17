@@ -8,7 +8,7 @@
         },
         "package": "raxon/{{$this.name|>string.lowercase}}",
         "directory": {
-          "test": "{{dd($this)}}",
+          "name": "test",
           "application": "Application/{{$this.name}}/",
           "icon": "Application/{{$this.name}}/Icon/Icon.png"
         },
