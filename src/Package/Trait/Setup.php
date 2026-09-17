@@ -89,6 +89,7 @@ trait Setup {
      */
     public function user_list($flags, $options): string
     {
+        ddd($options);
         $object = $this->object();
         $class = 'Account.User';
         $node = new Node($object);
