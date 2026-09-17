@@ -7,7 +7,7 @@
         "display": {
           "name": "Audio Player"
         },
-        "package": "raxon/{{$this.name|>string.to.lower}}",
+        "package": "raxon/{{$this.name|>string.lowercase}}",
         "directory": {
           "application": "Application/{{$this.name}}/",
           "icon": "Application/{{$this.name}}/Icon/Icon.png"
