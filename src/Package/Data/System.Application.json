@@ -7,9 +7,16 @@
         "display": {
           "name": "Audio Player"
         },
+        "package": "raxon/{{$this.name|>string.to.lower}}",
         "directory": {
           "application": "Application/{{$this.name}}/",
           "icon": "Application/{{$this.name}}/Icon/Icon.png"
+        },
+        "url": {
+          "node_extension" : "{{config('project.dir.node')}}Data/System.Server.Extension.json",
+          "node_content_type": "{{config('project.dir.node')}}Data/System.Server.ContentType.json",
+          "extension": "{{config('project.dir.data')}}System.Server.Extension.json",
+          "content_type": "{{config('project.dir.data')}}System.Server.ContentType.json"
         },
         "method": null,
         "target": null,

@@ -47,7 +47,8 @@ trait Setup {
         }
         $options->frontend = $this->install_frontend_get($options);
         $options->backend = $this->install_backend_get($options);
-        $options->package = self::PACKAGE;
+        //$options->package = self::PACKAGE;
+        /*
         $options->url = (object) [
             'node_extension' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension' . $object->config('extension.json'),
             'node_content_type' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.ContentType' . $object->config('extension.json'),
@@ -55,8 +56,9 @@ trait Setup {
             'content_type' => $object->config('controller.dir.data') . 'System.Server.ContentType' . $object->config('extension.json'),
             'system_application' => $object->config('controller.dir.data') . 'System.Application' . $object->config('extension.json')
         ];
+        */
         $object->data(App::OPTIONS, $options);
-        dd($object->data(App::OPTIONS));
+//        $this->object($object);
         $this->install_api($options);
         $this->install_application($options);
         $list = User::list($object, User::ROLES_ALLOWED);
@@ -90,7 +92,6 @@ trait Setup {
      */
     public function user_list($flags, $options): string
     {
-        ddd($options);
         $object = $this->object();
         $class = 'Account.User';
         $node = new Node($object);
@@ -151,12 +152,16 @@ trait Setup {
     public function extension_list($flags, $options): string
     {
         $object = $this->object();
-        $url = $object->config('project.dir.node') .
-            'Data' .
-            $object->config('ds') .
-            'System.Server.Extension' .
-            $object->config('extension.json')
-        ;
+        if(!property_exists($options, 'url')){
+            throw new Exception('Option -url not set');
+        }
+        if(!property_exists($options->url, 'node_extension')){
+            throw new Exception('Option -url.node_extension not set');
+        }
+        if(!property_exists($options->url, 'extension')){
+            throw new Exception('Option -url.extension not set');
+        }
+        $url = $options->url->node_extension;
         $read = $object->data_read($url);
         if (!$read) {
             throw new Exception('Node: System.Server.Extension.json not found aborting...');
@@ -168,10 +173,7 @@ trait Setup {
             $active[] = $extension->name;
             $list_search[$extension->name] = $extension->uuid;
         }
-        $url = $object->config('controller.dir.data') .
-            'System.Server.Extension' .
-            $object->config('extension.json')
-        ;
+        $url = $options->url->extension;
         $data_extension = $object->data_read($url);
         if(!$data_extension){
             throw new Exception('Node (Import): System.Server.Extension.json not found aborting...');
