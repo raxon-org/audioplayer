@@ -154,13 +154,13 @@ trait Setup {
     {
         $object = $this->object();
         if(!property_exists($application, 'url')){
-            throw new Exception('Option -url not set');
+            throw new Exception('Option -application not set');
         }
         if(!property_exists($application->url, 'node_extension')){
-            throw new Exception('Option -url.node_extension not set');
+            throw new Exception('Option -application.node_extension not set');
         }
         if(!property_exists($application->url, 'extension')){
-            throw new Exception('Option -url.extension not set');
+            throw new Exception('Option -application.extension not set');
         }
         $url = $application->url->node_extension;
         $read = $object->data_read($url);
@@ -175,6 +175,7 @@ trait Setup {
             $list_search[$extension->name] = $extension->uuid;
         }
         $url = $application->url->extension;
+        ddd($url);
         $data_extension = $object->data_read($url);
         if(!$data_extension){
             throw new Exception('Node (Import): System.Server.Extension.json not found aborting...');
