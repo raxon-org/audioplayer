@@ -61,13 +61,14 @@ trait Setup {
         $application_list = $this->install_system_application(
             $flags,
             $options,
-        );
+        );)
         $list = User::list($object, User::ROLES_ALLOWED);
 //        $this->object($object);
         foreach($application_list as $application){
+            ddd($application);
             $this->install_api($options, $application);
             $this->install_application($options, $application);
-            ddd($application);
+
             Navigation::create(
                 $object,
                 $list,
