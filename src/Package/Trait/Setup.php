@@ -61,7 +61,7 @@ trait Setup {
         $application_list = $this->install_system_application(
             $flags,
             $options,
-        );)
+        );
         $list = User::list($object, User::ROLES_ALLOWED);
 //        $this->object($object);
         foreach($application_list as $application){
