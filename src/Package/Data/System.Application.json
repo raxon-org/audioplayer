@@ -11,7 +11,7 @@
         "backend": "{{Package.Raxon.AudioPlayer:Setup:install.backend.get(options())}}",
         "directory": {
           "application": "Application/{{$this.#parentNode.#parentNode.name}}/",
-          "icon": "Application/{{$this.name}}/Icon/Icon.png"
+          "icon": "Application/{{$this.#parentNode.#parentNode.name}}/Icon/Icon.png"
         },
         "url": {
           "node_extension" : "{{config('project.dir.node')}}Data/System.Server.Extension.json",

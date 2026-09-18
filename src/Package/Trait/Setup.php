@@ -62,23 +62,26 @@ trait Setup {
             $flags,
             $options,
         );
+        $list = User::list($object, User::ROLES_ALLOWED);
 //        $this->object($object);
         foreach($application_list as $application){
             $this->install_api($options, $application);
             $this->install_application($options, $application);
+            ddd($application);
+            Navigation::create(
+                $object,
+                $list,
+                (object)[
+                    'name' => self::NAME,
+                    'route' => (object) [
+                        'name' => self::ROUTE_NAME,
+                    ]
+                ]
+            );
         }
 
-        $list = User::list($object, User::ROLES_ALLOWED);
-        Navigation::create(
-            $object,
-            $list,
-            (object)[
-                'name' => self::NAME,
-                'route' => (object) [
-                    'name' => self::ROUTE_NAME,
-                ]
-            ]
-        );
+
+
 
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
