@@ -156,6 +156,7 @@ trait Setup {
     public function extension_list($flags, $options, $application): array
     {
         $object = $this->object();
+        dd($application);
         if(!property_exists($application, 'url')){
             throw new Exception('Application.url not set');
         }
