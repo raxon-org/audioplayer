@@ -10,7 +10,7 @@
         "frontend": "{{Package.Raxon.AudioPlayer:Setup:install.frontend.get(options())}}",
         "backend": "{{Package.Raxon.AudioPlayer:Setup:install.backend.get(options())}}",
         "directory": {
-          "application": "Application/{{$this.#parentNode.name}}/",
+          "application": "Application/{{$this.#parentNode.#parentNode.name}}/",
           "icon": "Application/{{$this.name}}/Icon/Icon.png"
         },
         "url": {
