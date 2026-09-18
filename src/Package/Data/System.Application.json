@@ -7,8 +7,8 @@
           "name": "Audio Player"
         },
         "package": "raxon/{{$this.name|>string.lowercase}}",
-        "frontend": "Package.Raxon.AudioPlayer:Setup:install.frontend.get(options())}}",
-        "backend": "{{raw|>object(Package.Raxon.AudioPlayer:Setup:install.backend.get(options()), 'json-line')}}",
+        "frontend": "{{Package.Raxon.AudioPlayer:Setup:install.frontend.get(options())}}",
+        "backend": "{{Package.Raxon.AudioPlayer:Setup:install.backend.get(options())}}",
         "directory": {
           "name": "test",
           "application": "Application/{{$this.name}}/",
@@ -23,8 +23,8 @@
         "method": null,
         "target": null,
         "description": "Audio Player (Playing mp3, wav & ogg)",
-        "user": "{{raw|>Package.Raxon.AudioPlayer:Setup:user.list(flags(), options(), $this)}}",
-        "extension": "{{raw|>Package.Raxon.AudioPlayer:Setup:extension.list(flags(), options(), $this)}}"
+        "user": "{{Package.Raxon.AudioPlayer:Setup:user.list(flags(), options(), $this)}}",
+        "extension": "{{Package.Raxon.AudioPlayer:Setup:extension.list(flags(), options(), $this)}}"
       }
     ]
   }
