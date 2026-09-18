@@ -168,7 +168,7 @@ trait Setup {
         if(!property_exists($application->url, 'extension')){
             throw new Exception('Application.url.extension not set');
         }
-        $url = $application->url->node_extension;
+        $url = $application->url->node->extension;
         $read = $object->data_read($url);
         if (!$read) {
             throw new Exception('Node: System.Server.Extension.json not found aborting...');
