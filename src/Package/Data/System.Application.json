@@ -14,8 +14,10 @@
           "icon": "Application/{{$this.#parentNode.#parentNode.name}}/Icon/Icon.png"
         },
         "url": {
-          "node_extension" : "{{config('project.dir.node')}}Data/System.Server.Extension.json",
-          "node_content_type": "{{config('project.dir.node')}}Data/System.Server.ContentType.json",
+          "node": {
+            "extension" : "{{config('project.dir.node')}}Data/System.Server.Extension.json",
+            "content_type": "{{config('project.dir.node')}}Data/System.Server.ContentType.json"
+          },
           "extension": "{{config('controller.dir.data')}}System.Server.Extension.json",
           "content_type": "{{config('controller.dir.data')}}System.Server.ContentType.json"
         },
