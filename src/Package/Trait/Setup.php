@@ -79,10 +79,6 @@ trait Setup {
                 ]
             );
         }
-
-
-
-
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
         if($output){
@@ -162,10 +158,13 @@ trait Setup {
         if(!property_exists($application, 'url')){
             throw new Exception('Option -application not set');
         }
-        if(!property_exists($application->url, 'node_extension')){
-            throw new Exception('Option -application.node_extension not set');
+        if(!property_exists($application->url, 'node')){
+            throw new Exception('Option -application.node not set');
         }
-        if(!property_exists($application->url, 'extension')){
+        if(!property_exists($application->url->node, 'extension')){
+            throw new Exception('Option -application.node.extension not set');
+        }
+        if(!property_exists($application, 'extension')){
             throw new Exception('Option -application.extension not set');
         }
         $url = $application->url->node_extension;
