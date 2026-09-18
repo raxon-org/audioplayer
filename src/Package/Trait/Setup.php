@@ -156,16 +156,16 @@ trait Setup {
     {
         $object = $this->object();
         if(!property_exists($application, 'url')){
-            throw new Exception('Option -application not set');
+            throw new Exception('Application.url not set');
         }
-        if(!property_exists($application->url, 'node')){
-            throw new Exception('Option -application.node not set');
+        if(!property_exists($application->url, 'node.url')){
+            throw new Exception('Application.node not set');
         }
         if(!property_exists($application->url->node, 'extension')){
-            throw new Exception('Option -application.node.extension not set');
+            throw new Exception('Application.url.node.extension not set');
         }
-        if(!property_exists($application, 'extension')){
-            throw new Exception('Option -application.extension not set');
+        if(!property_exists($application->url, 'extension')){
+            throw new Exception('Application.url.extension not set');
         }
         $url = $application->url->node_extension;
         $read = $object->data_read($url);
