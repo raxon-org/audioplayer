@@ -94,7 +94,7 @@ trait Setup {
      * @throws ObjectException
      * @throws Exception
      */
-    public function user_list(object $flags, object $options, $application): string
+    public function user_list(object $flags, object $options, $application): array
     {
         $object = $this->object();
         $class = 'Account.User';
@@ -146,14 +146,14 @@ trait Setup {
                 }
             }
         }
-        return Core::object($user_list, Core::OBJECT_JSON_LINE);
+        return $user_list;
     }
 
     /**
      * @throws ObjectException
      * @throws Exception
      */
-    public function extension_list($flags, $options, $application): string
+    public function extension_list($flags, $options, $application): array
     {
         $object = $this->object();
         if(!property_exists($application, 'url')){
@@ -207,6 +207,6 @@ trait Setup {
                 */
             }
         }
-        return Core::object($extensions, Core::OBJECT_JSON_LINE);
+        return $extensions;
     }
 }
