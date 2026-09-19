@@ -67,7 +67,6 @@ trait Setup {
         foreach($application_list as $application){
             $this->install_api($options, $application);
             $this->install_application($options, $application);
-
             Navigation::create(
                 $object,
                 $list,
