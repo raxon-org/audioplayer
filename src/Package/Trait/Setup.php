@@ -156,19 +156,19 @@ trait Setup {
     public function extension_list($flags, $options, $application): array
     {
         $object = $this->object();
-        if(!property_exists($application, 'url')){
-            throw new Exception('Application.url not set');
+        if(!property_exists($application, 'source')){
+            throw new Exception('Application.source not set');
         }
-        if(!property_exists($application->url, 'node')){
+        if(!property_exists($application->source, 'node')){
             throw new Exception('Application.node not set');
         }
-        if(!property_exists($application->url->node, 'extension')){
+        if(!property_exists($application->source->node, 'extension')){
             throw new Exception('Application.url.node.extension not set');
         }
-        if(!property_exists($application->url, 'extension')){
+        if(!property_exists($application->source, 'extension')){
             throw new Exception('Application.url.extension not set');
         }
-        $url = $application->url->node->extension;
+        $url = $application->source->node->extension;
         $read = $object->data_read($url);
         if (!$read) {
             throw new Exception('Node: System.Server.Extension.json not found aborting...');
@@ -180,7 +180,7 @@ trait Setup {
             $active[] = $extension->name;
             $list_search[$extension->name] = $extension->uuid;
         }
-        $url = $application->url->extension;
+        $url = $application->source->extension;
         $data_extension = $object->data_read($url);
         if(!$data_extension){
             throw new Exception('Node (Import): System.Server.Extension.json not found aborting...');
