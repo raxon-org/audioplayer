@@ -65,18 +65,14 @@ trait Setup {
         $list = User::list($object, User::ROLES_ALLOWED);
 //        $this->object($object);
         foreach($application_list as $application){
-            d($options);
             $this->install_api($options, $application);
-            d($options);
             $this->install_application($options, $application);
-            d($options);
             Navigation::create(
                 $object,
                 $list,
                 $options,
                 $application
             );
-            d($options);
         }
         $command = 'app install raxon/account -patch';
         Core::execute($object, $command, $output, $notification);
