@@ -9,7 +9,7 @@
         "package": "raxon/{{$this.name|>string.lowercase}}",
         "frontend": "{{Package.Raxon.AudioPlayer:Setup:install.frontend.get(options())}}",
         "backend": "{{Package.Raxon.AudioPlayer:Setup:install.backend.get(options())}}",
-        "directory": {
+        "config": {
           "application": "Application/{{$this.#parentNode.#parentNode.name}}/",
           "icon": "Application/{{$this.#parentNode.#parentNode.name}}/Icon/Icon.png"
         },
