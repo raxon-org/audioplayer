@@ -23,7 +23,7 @@
         "method": null,
         "target": null,
         "description": "Audio Player (Playing mp3, wav & ogg)",
-        "icon": "Application/{{$this.#parentNode.#parentNode.name}}/Icon/Icon.png",
+        "icon": "Application/{{$this.name}}/Icon/Icon.png",
         "user": "{{Package.Raxon.AudioPlayer:Setup:user.list(flags(), options(), $this)}}",
         "extension": "{{Package.Raxon.AudioPlayer:Setup:extension.list(flags(), options(), $this)}}"
       }
