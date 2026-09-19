@@ -9,9 +9,8 @@
         "package": "raxon/{{$this.name|>string.lowercase}}",
         "frontend": "{{Package.Raxon.AudioPlayer:Setup:install.frontend.get(options())}}",
         "backend": "{{Package.Raxon.AudioPlayer:Setup:install.backend.get(options())}}",
-        "config": {
-          "application": "Application/{{$this.#parentNode.#parentNode.name}}/",
-          "icon": "Application/{{$this.#parentNode.#parentNode.name}}/Icon/Icon.png"
+        "directory": {
+          "application": "Application/{{$this.#parentNode.#parentNode.name}}/"
         },
         "source": {
           "node": {
@@ -24,6 +23,7 @@
         "method": null,
         "target": null,
         "description": "Audio Player (Playing mp3, wav & ogg)",
+        "icon": "Application/{{$this.#parentNode.#parentNode.name}}/Icon/Icon.png",
         "user": "{{Package.Raxon.AudioPlayer:Setup:user.list(flags(), options(), $this)}}",
         "extension": "{{Package.Raxon.AudioPlayer:Setup:extension.list(flags(), options(), $this)}}"
       }
