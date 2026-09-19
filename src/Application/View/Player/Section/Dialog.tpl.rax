@@ -1,4 +1,4 @@
-{{$frontend.host = options('frontend.host')}}{{$backend.host = options('backend.host')}{{literal}}
+{{$frontend.host = options('frontend.host')}}{{$backend.host = options('backend.host')}}{{literal}}
 {{RAX}}
 {{$request.file = $request.file|>default:''}}
 <div class="dialog dialog-{{config('controller.name')}}-main">
