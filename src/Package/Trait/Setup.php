@@ -65,6 +65,7 @@ trait Setup {
         $list = User::list($object, User::ROLES_ALLOWED);
 //        $this->object($object);
         foreach($application_list as $application){
+            d($options);
             $this->install_api($options, $application);
             $this->install_application($options, $application);
             Navigation::create(
