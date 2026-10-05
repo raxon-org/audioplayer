@@ -41,14 +41,11 @@ trait Setup {
             $flags,
             $options,
         );
-        $list = User::list($object, User::ROLES_ALLOWED);
-//        $this->object($object);
         foreach($application_list as $application){
             $this->install_api($options, $application);
             $this->install_application($options, $application);
             Navigation::create(
                 $object,
-                $list,
                 $options,
                 $application
             );
