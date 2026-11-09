@@ -24,19 +24,6 @@ trait Setup {
         if($object->config(Config::POSIX_ID) !== 0){
             return;
         }
-//        $options->frontend = $this->install_frontend_get($options);
-//        $options->backend = $this->install_backend_get($options);
-        //$options->package = self::PACKAGE;
-        /*
-        $options->url = (object) [
-            'node_extension' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.Extension' . $object->config('extension.json'),
-            'node_content_type' => $object->config('project.dir.node') . 'Data' . $object->config('ds') . 'System.Server.ContentType' . $object->config('extension.json'),
-            'extension' => $object->config('controller.dir.data') . 'System.Server.Extension' . $object->config('extension.json'),
-            'content_type' => $object->config('controller.dir.data') . 'System.Server.ContentType' . $object->config('extension.json'),
-            'system_application' => $object->config('controller.dir.data') . 'System.Application' . $object->config('extension.json')
-        ];
-        */
-//        $object->data(App::OPTIONS, $options);
         $application_list = $this->install_system_application(
             $flags,
             $options,
